@@ -11,7 +11,7 @@ export function Header() {
   const { user, logout } = useAuth();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-100/80 bg-white/90 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90">
+    <header className="sticky top-0 z-40 overflow-visible border-b border-slate-100/80 bg-white/90 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
           <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">

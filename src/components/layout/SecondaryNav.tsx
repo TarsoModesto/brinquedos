@@ -19,7 +19,7 @@ const items = [
 export function SecondaryNav() {
   return (
     <nav
-      className="relative z-30 mx-auto -mt-8 flex max-w-3xl justify-center px-4"
+      className="relative z-[45] mx-auto -mt-5 flex max-w-3xl justify-center px-4 pb-1 sm:-mt-6"
       aria-label="Seções do site"
     >
       <div className="flex w-full flex-wrap items-center justify-center gap-1 rounded-full border border-slate-100 bg-white/95 p-2 shadow-nav backdrop-blur dark:border-slate-800 dark:bg-slate-900/95 sm:flex-nowrap sm:gap-0 sm:overflow-x-auto">

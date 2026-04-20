@@ -18,7 +18,7 @@ export function HeroSection() {
           Diversão garantida para a sua festa
         </div>
         <h1 className="text-balance text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-          Carretar da <span className="text-sky-500 dark:text-sky-400">Alegria</span> 🥳
+          Carretar da <span className="text-sky-500 dark:text-sky-400">Alegria</span>
         </h1>
         <p className="max-w-xl text-lg text-slate-600 dark:text-slate-400">
           Aluguel do nosso carretar de brinquedo para festas, eventos e aniversários. Confira as datas
