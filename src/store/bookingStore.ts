@@ -1,40 +1,143 @@
 import { create } from 'zustand';
-import type { Booking, BookingStatus, CreateBookingInput } from '@/types';
-import { bookingService } from '@/services';
+import type { Servico, HorarioDisponivel } from '@/types/database';
+import { horariosService, servicosService } from '@/services/supabase';
 
-interface BookingState {
-  bookings: Booking[];
-  loading: boolean;
-  fetchBookings: () => Promise<void>;
-  createBooking: (input: CreateBookingInput) => Promise<Booking>;
-  updateStatus: (id: string, status: BookingStatus) => Promise<Booking>;
+interface BookingStep {
+  step: 'servico' | 'data' | 'horario' | 'confirmacao';
+  servico?: Servico;
+  data?: Date;
+  horario?: string;
+  zona?: string;
+  lat?: number;
+  lng?: number;
+  observacoes?: string;
 }
 
-export const useBookingStore = create<BookingState>((set, get) => ({
-  bookings: [],
-  loading: false,
+interface BookingStoreState {
+  current: BookingStep;
+  isLoading: boolean;
+  error: string | null;
+  servicos: Servico[];
+  horariosDisponiveis: HorarioDisponivel[];
 
-  fetchBookings: async () => {
-    set({ loading: true });
+  setServico: (servico: Servico) => void;
+  setData: (data: Date) => Promise<void>;
+  setHorario: (horario: string) => void;
+  setZona: (zona: string) => void;
+  setLocalizacao: (lat: number, lng: number) => void;
+  setObservacoes: (obs: string) => void;
+  proximoStep: () => void;
+  stepAnterior: () => void;
+  resetarFluxo: () => void;
+  carregarServicos: () => Promise<void>;
+}
+
+const initialStep: BookingStep = { step: 'servico' };
+
+export const useBookingStore = create<BookingStoreState>((set, get) => ({
+  current: initialStep,
+  isLoading: false,
+  error: null,
+  servicos: [],
+  horariosDisponiveis: [],
+
+  setServico: (servico) => {
+    set((state) => ({
+      current: { ...state.current, servico },
+    }));
+  },
+
+  setData: async (data) => {
+    set({ isLoading: true, error: null });
     try {
-      const bookings = await bookingService.list();
-      set({ bookings });
-    } finally {
-      set({ loading: false });
+      const { current } = get();
+      const horarios = await horariosService.buscarDisponiveis(
+        data,
+        current.servico?.id || ''
+      );
+      set((state) => ({
+        current: { ...state.current, data },
+        horariosDisponiveis: horarios.filter((h) => h.disponivel),
+        isLoading: false,
+      }));
+    } catch (err) {
+      set({
+        error: 'Erro ao carregar horários disponíveis',
+        isLoading: false,
+      });
     }
   },
 
-  createBooking: async (input) => {
-    const booking = await bookingService.create(input);
-    set({ bookings: [...get().bookings, booking] });
-    return booking;
+  setHorario: (horario) => {
+    set((state) => ({
+      current: { ...state.current, horario },
+    }));
   },
 
-  updateStatus: async (id, status) => {
-    const updated = await bookingService.updateStatus(id, status);
-    set({
-      bookings: get().bookings.map((b) => (b.id === id ? updated : b)),
-    });
-    return updated;
+  setZona: (zona) => {
+    set((state) => ({
+      current: { ...state.current, zona },
+    }));
+  },
+
+  setLocalizacao: (lat, lng) => {
+    set((state) => ({
+      current: { ...state.current, lat, lng },
+    }));
+  },
+
+  setObservacoes: (observacoes) => {
+    set((state) => ({
+      current: { ...state.current, observacoes },
+    }));
+  },
+
+  proximoStep: () => {
+    const { current } = get();
+    const steps: BookingStep['step'][] = [
+      'servico',
+      'data',
+      'horario',
+      'confirmacao',
+    ];
+    const nextIndex = steps.indexOf(current.step) + 1;
+    if (nextIndex < steps.length) {
+      set((state) => ({
+        current: { ...state.current, step: steps[nextIndex] },
+      }));
+    }
+  },
+
+  stepAnterior: () => {
+    const { current } = get();
+    const steps: BookingStep['step'][] = [
+      'servico',
+      'data',
+      'horario',
+      'confirmacao',
+    ];
+    const prevIndex = steps.indexOf(current.step) - 1;
+    if (prevIndex >= 0) {
+      set((state) => ({
+        current: { ...state.current, step: steps[prevIndex] },
+      }));
+    }
+  },
+
+  resetarFluxo: () => {
+    set({ current: initialStep, horariosDisponiveis: [], error: null });
+  },
+
+  carregarServicos: async () => {
+    set({ isLoading: true });
+    try {
+      const servicos = await servicosService.listar();
+      set({ servicos, isLoading: false });
+    } catch (err) {
+      set({
+        error: 'Erro ao carregar serviços',
+        isLoading: false,
+      });
+    }
   },
 }));
