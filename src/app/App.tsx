@@ -4,14 +4,14 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { LoginPage } from '@/pages/LoginPage';
 import { AdminPage } from '@/pages/AdminPage';
 import { BookingPage } from '@/pages/BookingPage';
-import { HomePage } from '@/features/home/pages/HomePage';
+import { TestPage } from '@/pages/TestPage';
 
 export default function App() {
   return (
     <>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<TestPage />} />
           <Route path="agendar" element={<BookingPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="admin" element={<AdminPage />} />

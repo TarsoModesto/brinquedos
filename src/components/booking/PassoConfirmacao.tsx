@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useBookingStore } from '@/store/bookingStore';
 import { useAuthStore } from '@/store/authStore';
 import { agendamentosService, servicosService } from '@/services/supabase';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 import { toast } from 'sonner';
 
 export function PassoConfirmacao() {
@@ -17,7 +17,8 @@ export function PassoConfirmacao() {
     return <div className="text-center py-8">Dados incompletos</div>;
   }
 
-  const preco = servicosService.getPreco(current.servico, current.data);
+  const servico = current.servico;
+  const preco = servicosService.getPreco(servico, current.data);
   const pixChave = import.meta.env.VITE_PIX_CHAVE || 'brinquedos@miniparque.com';
 
   const handleAgendar = async () => {
@@ -36,9 +37,9 @@ export function PassoConfirmacao() {
         0
       );
 
-      const agendamento = await agendamentosService.criar(
+      await agendamentosService.criar(
         {
-          servico_id: current.servico.id,
+          servico_id: servico.id,
           data_inicio: dataInicio.toISOString(),
           zona_cliente: current.zona,
           lat_cliente: current.lat,
@@ -79,7 +80,7 @@ export function PassoConfirmacao() {
               animate={{ scale: 1 }}
               className="p-4 bg-white border-2 border-blue-500 rounded-lg"
             >
-              <QRCode value={pixChave} size={256} />
+              <QRCodeSVG value={pixChave} size={256} />
             </motion.div>
           </div>
         )}
@@ -123,7 +124,7 @@ export function PassoConfirmacao() {
         <div className="space-y-3">
           <div className="flex justify-between">
             <span className="text-gray-600">Serviço:</span>
-            <span className="font-semibold">{current.servico.nome}</span>
+            <span className="font-semibold">{servico.nome}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Data:</span>
@@ -137,7 +138,7 @@ export function PassoConfirmacao() {
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Duração:</span>
-            <span className="font-semibold">{current.servico.duracao_minutos} min</span>
+            <span className="font-semibold">{servico.duracao_minutos} min</span>
           </div>
           <div className="border-t-2 border-gray-300 pt-3 flex justify-between">
             <span className="text-lg font-bold">Total:</span>
