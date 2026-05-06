@@ -8,13 +8,20 @@ import {
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
-const items = [
+interface NavItem {
+  to: string;
+  label: string;
+  icon: typeof Home;
+  end?: boolean;
+}
+
+const items: readonly NavItem[] = [
   { to: '/', label: 'Início', icon: Home, end: true },
   { to: '/como-funciona', label: 'Como funciona', icon: Sparkles },
   { to: '/reservas', label: 'Reservas', icon: CalendarDays },
   { to: '/galeria', label: 'Galeria', icon: Camera },
   { to: '/contato', label: 'Contato', icon: MessageCircle },
-] as const;
+];
 
 export function SecondaryNav() {
   return (

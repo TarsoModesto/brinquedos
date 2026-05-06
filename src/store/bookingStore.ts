@@ -8,6 +8,7 @@ interface BookingState {
   fetchBookings: () => Promise<void>;
   createBooking: (input: CreateBookingInput) => Promise<Booking>;
   updateStatus: (id: string, status: BookingStatus) => Promise<Booking>;
+  removeBooking: (id: string) => Promise<void>;
 }
 
 export const useBookingStore = create<BookingState>((set, get) => ({
@@ -36,5 +37,10 @@ export const useBookingStore = create<BookingState>((set, get) => ({
       bookings: get().bookings.map((b) => (b.id === id ? updated : b)),
     });
     return updated;
+  },
+
+  removeBooking: async (id) => {
+    await bookingService.remove(id);
+    set({ bookings: get().bookings.filter((b) => b.id !== id) });
   },
 }));

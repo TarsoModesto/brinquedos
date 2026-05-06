@@ -6,6 +6,7 @@ interface AuthState {
   user: User | null;
   initialized: boolean;
   init: () => Promise<void>;
+  refresh: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -21,6 +22,15 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ user, initialized: true });
     } catch {
       set({ user: null, initialized: true });
+    }
+  },
+
+  refresh: async () => {
+    try {
+      const user = await authService.me();
+      set({ user });
+    } catch {
+      set({ user: null });
     }
   },
 

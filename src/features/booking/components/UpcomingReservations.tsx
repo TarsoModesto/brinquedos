@@ -5,9 +5,11 @@ import { useMemo } from 'react';
 import type { Booking, BookingStatus } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { useAuth } from '@/hooks/useAuth';
 import { useBookingStore } from '@/store/bookingStore';
 import { getErrorMessage } from '@/utils/errors';
 import { toast } from 'sonner';
+import { cn } from '@/utils/cn';
 
 function statusLabel(s: BookingStatus) {
   if (s === 'confirmed') return 'Confirmada';
@@ -15,12 +17,22 @@ function statusLabel(s: BookingStatus) {
   return 'Cancelada';
 }
 
+function statusBadgeClass(s: BookingStatus) {
+  if (s === 'confirmed')
+    return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200';
+  if (s === 'pending')
+    return 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200';
+  return 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-200';
+}
+
 export function UpcomingReservations() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
   const bookings = useBookingStore((s) => s.bookings);
   const loading = useBookingStore((s) => s.loading);
   const updateStatus = useBookingStore((s) => s.updateStatus);
 
-  const upcoming = useMemo(() => {
+  const upcoming = useMemo<Booking[]>(() => {
     return bookings
       .filter((b) => b.status !== 'cancelled')
       .filter((b) => {
@@ -61,33 +73,44 @@ export function UpcomingReservations() {
               className="flex flex-col gap-2 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/50 sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
-                <p className="font-medium text-slate-900 dark:text-white">{b.name}</p>
+                <p className="font-medium text-slate-900 dark:text-white">
+                  {isAdmin ? b.name : 'Reservado'}
+                </p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   {format(parseISO(b.date), "EEEE, d 'de' MMMM", { locale: ptBR })}
                 </p>
-                <p className="text-sm text-slate-600 dark:text-slate-300">{b.phone}</p>
+                {isAdmin ? (
+                  <p className="text-sm text-slate-600 dark:text-slate-300">{b.phone}</p>
+                ) : null}
               </div>
               <div className="flex flex-col items-stretch gap-2 sm:items-end">
-                <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm dark:bg-slate-900 dark:text-slate-200">
+                <span
+                  className={cn(
+                    'inline-flex w-fit self-end rounded-full px-3 py-1 text-xs font-semibold',
+                    statusBadgeClass(b.status)
+                  )}
+                >
                   {statusLabel(b.status)}
                 </span>
-                <select
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-900"
-                  value={b.status}
-                  onChange={async (ev) => {
-                    try {
-                      await updateStatus(b.id, ev.target.value as BookingStatus);
-                      toast.success('Status atualizado.');
-                    } catch (e) {
-                      toast.error(getErrorMessage(e));
-                    }
-                  }}
-                  aria-label={`Alterar status da reserva de ${b.name}`}
-                >
-                  <option value="pending">Pendente</option>
-                  <option value="confirmed">Confirmada</option>
-                  <option value="cancelled">Cancelada</option>
-                </select>
+                {isAdmin ? (
+                  <select
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-600 dark:bg-slate-900"
+                    value={b.status}
+                    onChange={async (ev) => {
+                      try {
+                        await updateStatus(b.id, ev.target.value as BookingStatus);
+                        toast.success('Status atualizado.');
+                      } catch (e) {
+                        toast.error(getErrorMessage(e));
+                      }
+                    }}
+                    aria-label={`Alterar status da reserva de ${b.name}`}
+                  >
+                    <option value="pending">Pendente</option>
+                    <option value="confirmed">Confirmada</option>
+                    <option value="cancelled">Cancelada</option>
+                  </select>
+                ) : null}
               </div>
             </li>
           ))}

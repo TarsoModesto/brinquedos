@@ -1,2 +1,2 @@
 export type { Booking, BookingStatus, CreateBookingInput } from './booking';
-export type { User, RegisterInput, LoginInput } from './user';
+export type { User, UserRole, RegisterInput, LoginInput } from './user';

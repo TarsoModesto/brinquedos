@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { CalendarDays, LogOut, Moon, Sun, Truck } from 'lucide-react';
+import { CalendarDays, ListChecks, LogOut, Moon, Shield, Sun, Truck } from 'lucide-react';
 import { SITE_NAME } from '@/constants/site';
 import { useAuth } from '@/hooks/useAuth';
 import { useThemeStore } from '@/store/themeStore';
@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 export function Header() {
   const { theme, toggle } = useThemeStore();
   const { user, logout } = useAuth();
+  const isAdmin = user?.role === 'admin';
 
   return (
     <header className="sticky top-0 z-40 overflow-visible border-b border-slate-100/80 bg-white/90 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/90">
@@ -33,6 +34,36 @@ export function Header() {
             <CalendarDays className="h-4 w-4" />
             Reservas
           </NavLink>
+
+          {user ? (
+            <NavLink
+              to="/minhas-reservas"
+              className={({ isActive }) =>
+                cn(
+                  'hidden items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-600 sm:flex dark:text-slate-300',
+                  isActive && 'bg-sky-50 text-sky-700 dark:bg-sky-950/50 dark:text-sky-300'
+                )
+              }
+            >
+              <ListChecks className="h-4 w-4" />
+              Minhas reservas
+            </NavLink>
+          ) : null}
+
+          {isAdmin ? (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                cn(
+                  'hidden items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-amber-700 transition-colors hover:bg-amber-50 sm:flex dark:text-amber-300 dark:hover:bg-amber-900/30',
+                  isActive && 'bg-amber-100 dark:bg-amber-900/40'
+                )
+              }
+            >
+              <Shield className="h-4 w-4" />
+              Admin
+            </NavLink>
+          ) : null}
 
           <button
             type="button"

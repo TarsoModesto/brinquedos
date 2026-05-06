@@ -3,6 +3,7 @@ export type BookingStatus = 'pending' | 'confirmed' | 'cancelled';
 
 export interface Booking {
   id: string;
+  userId: string | null;
   name: string;
   phone: string;
   date: string;
