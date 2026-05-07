@@ -56,7 +56,7 @@ export function LoginPage() {
         </form>
         <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
           Não tem conta?{' '}
-          <Link to="/cadastro" state={location.state} className="font-semibold text-sky-600 hover:underline dark:text-sky-400">
+          <Link to="/cadastro" state={location.state} className="font-semibold text-brand-600 hover:underline dark:text-brand-400">
             Criar conta
           </Link>
         </p>

@@ -58,7 +58,7 @@ export function UpcomingReservations() {
   return (
     <Card>
       <div className="mb-4 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
-        <ListChecks className="h-5 w-5 text-sky-500" aria-hidden />
+        <ListChecks className="h-5 w-5 text-brand-500" aria-hidden />
         Próximas reservas
       </div>
       {upcoming.length === 0 ? (

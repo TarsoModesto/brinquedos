@@ -1,13 +1,17 @@
 import { MessageCircle } from 'lucide-react';
 import { WHATSAPP_DISPLAY, WHATSAPP_URL } from '@/constants/site';
 
+/**
+ * Botão flutuante de WhatsApp — apenas desktop.
+ * Em mobile usamos `MobileBottomCta` em vez disso.
+ */
 export function WhatsAppFab() {
   return (
     <a
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="group fixed bottom-6 right-4 z-50 flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/30 transition hover:scale-[1.04] hover:bg-[#20bd5a] active:scale-[0.98] sm:bottom-8 sm:right-8"
+      className="group fixed bottom-8 right-8 z-50 hidden items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-900/30 transition hover:scale-[1.04] hover:bg-[#20bd5a] active:scale-[0.98] sm:flex"
       aria-label={`Conversar no WhatsApp ${WHATSAPP_DISPLAY}`}
     >
       <span className="relative flex h-5 w-5 items-center justify-center">

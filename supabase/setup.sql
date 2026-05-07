@@ -1,5 +1,5 @@
 -- =====================================================================
--- Carretar da Alegria — Setup Supabase (idempotente)
+-- Carretinha Mini Parke — Setup Supabase (idempotente)
 -- =====================================================================
 -- Cole este script inteiro no SQL Editor do Supabase e execute.
 -- Pode rodar quantas vezes quiser — usa IF NOT EXISTS / OR REPLACE.

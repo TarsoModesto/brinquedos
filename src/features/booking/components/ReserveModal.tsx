@@ -16,9 +16,11 @@ interface ReserveModalProps {
   open: boolean;
   dateIso: string | null;
   onClose: () => void;
+  /** Callback disparado após criar reserva com sucesso (usado para confete). */
+  onCreated?: () => void;
 }
 
-export function ReserveModal({ open, dateIso, onClose }: ReserveModalProps) {
+export function ReserveModal({ open, dateIso, onClose, onCreated }: ReserveModalProps) {
   const { user } = useAuth();
   const createBooking = useBookingStore((s) => s.createBooking);
 
@@ -46,6 +48,7 @@ export function ReserveModal({ open, dateIso, onClose }: ReserveModalProps) {
       toast.success(`Reserva solicitada para ${formatShortDate(values.date)}!`);
       onClose();
       form.reset({ name: user?.name ?? '', phone: '', date: '' });
+      onCreated?.();
     } catch (e) {
       toast.error(getErrorMessage(e));
     }

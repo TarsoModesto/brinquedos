@@ -1,125 +1,157 @@
-import { Check, Sparkles } from 'lucide-react';
+import { BadgeCheck, Baby, Clock, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { WHATSAPP_URL } from '@/constants/site';
+import { cn } from '@/utils/cn';
 
-const plans = [
-  {
-    name: 'Básico',
-    description: 'Ideal para festas pequenas em casa.',
-    priceFrom: 'R$ 350',
-    duration: '2 horas de animação',
-    items: ['Carretinha colorida', 'Operador da equipe', 'Som ambiente', 'Atende em SP'],
-    accent: 'from-sky-400 to-sky-600',
-    highlighted: false,
-  },
-  {
-    name: 'Festa Completa',
-    description: 'Nosso plano mais escolhido pelas famílias.',
-    priceFrom: 'R$ 590',
-    duration: '4 horas de pura diversão',
-    items: [
-      'Tudo do plano Básico',
-      'Bolhas de sabão e brindes',
-      'Pintura facial leve',
-      'Trilha musical personalizada',
-    ],
-    accent: 'from-pink-500 via-orange-400 to-amber-400',
-    highlighted: true,
-  },
-  {
-    name: 'Premium',
-    description: 'Para eventos grandes e marcantes.',
-    priceFrom: 'R$ 890',
-    duration: '6 horas + extras',
-    items: [
-      'Tudo do plano Completo',
-      'Animador profissional',
-      'Decoração temática',
-      'Cobertura fotográfica',
-    ],
-    accent: 'from-violet-500 to-fuchsia-500',
-    highlighted: false,
-  },
-] as const;
+interface Plan {
+  hours: number;
+  weekday: number;
+  weekend: number;
+  highlighted?: boolean;
+}
+
+const plans: readonly Plan[] = [
+  { hours: 3, weekday: 300, weekend: 400 },
+  { hours: 4, weekday: 400, weekend: 500, highlighted: true },
+  { hours: 5, weekday: 500, weekend: 600 },
+];
+
+const formatBRL = (n: number) =>
+  n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 });
 
 export function PricingSection() {
   return (
     <section className="space-y-10" id="pacotes">
       <header className="text-center">
-        <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
-          Pacotes
+        <span className="inline-block rounded-full bg-accent-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent-700 dark:bg-accent-700/40 dark:text-accent-200">
+          Tabela de preços
         </span>
         <h2 className="mt-3 font-display text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">
-          Um pacote para cada festa
+          Escolha quantas horas de <span className="gradient-text">diversão</span>
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-slate-600 dark:text-slate-400">
-          Valores a partir de — confirme detalhes e datas pelo WhatsApp ou solicite no calendário.
+          Sem letras miúdas: monitor profissional já incluso e tudo pronto para a alegria das
+          crianças de 0 a 7 anos.
         </p>
+
+        <ul className="mx-auto mt-5 flex max-w-2xl flex-wrap items-center justify-center gap-3 text-sm">
+          <li className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-2 font-semibold text-emerald-800 shadow-sm dark:bg-emerald-900/40 dark:text-emerald-200">
+            <BadgeCheck className="h-4 w-4" aria-hidden /> Monitor incluso
+          </li>
+          <li className="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-2 font-semibold text-brand-800 shadow-sm dark:bg-brand-900/40 dark:text-brand-200">
+            <Baby className="h-4 w-4" aria-hidden /> Crianças de 0 a 7 anos
+          </li>
+          <li className="inline-flex items-center gap-2 rounded-full bg-support-400/20 px-4 py-2 font-semibold text-support-700 dark:text-support-300">
+            <Sparkles className="h-4 w-4" aria-hidden /> Atendemos toda a Grande SP
+          </li>
+        </ul>
       </header>
 
       <div className="grid gap-6 md:grid-cols-3">
-        {plans.map((p) => (
-          <article
-            key={p.name}
-            className={`relative flex flex-col rounded-[2rem] p-[2px] transition hover:-translate-y-1 hover:shadow-lg ${
-              p.highlighted
-                ? 'bg-gradient-to-br ' + p.accent + ' shadow-glow'
-                : 'bg-slate-200 dark:bg-slate-800'
-            }`}
-          >
-            <div className="flex h-full flex-col rounded-[calc(2rem-2px)] bg-white p-7 dark:bg-slate-900">
-              {p.highlighted ? (
-                <span className="mb-4 inline-flex w-fit items-center gap-1 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 px-3 py-1 text-xs font-black uppercase tracking-wide text-white shadow-soft">
-                  <Sparkles className="h-3 w-3" /> Mais escolhido
-                </span>
-              ) : null}
-              <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white">
-                {p.name}
-              </h3>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{p.description}</p>
-              <div className="mt-5">
-                <span className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                  a partir de
-                </span>
-                <p className="font-display text-4xl font-black text-slate-900 dark:text-white">
-                  {p.priceFrom}
+        {plans.map((p) => {
+          const economyPct = Math.round(((p.weekend - p.weekday) / p.weekend) * 100);
+          return (
+            <article
+              key={p.hours}
+              className={cn(
+                'relative flex flex-col rounded-[2rem] p-[2px] transition hover:-translate-y-1 hover:shadow-lg',
+                p.highlighted
+                  ? 'bg-gradient-fun shadow-glow'
+                  : 'bg-slate-200 dark:bg-slate-800'
+              )}
+            >
+              <div className="flex h-full flex-col rounded-[calc(2rem-2px)] bg-white p-6 dark:bg-slate-900 sm:p-7">
+                {p.highlighted ? (
+                  <span className="mb-4 inline-flex w-fit items-center gap-1 rounded-full bg-gradient-fun px-3 py-1 text-xs font-black uppercase tracking-wide text-white shadow-soft">
+                    <Sparkles className="h-3 w-3" /> Mais escolhido
+                  </span>
+                ) : null}
+
+                <div className="flex items-baseline gap-2">
+                  <Clock
+                    className={cn(
+                      'h-7 w-7',
+                      p.highlighted ? 'text-brand-500' : 'text-slate-400 dark:text-slate-500'
+                    )}
+                    aria-hidden
+                  />
+                  <span className="font-display text-5xl font-black text-slate-900 dark:text-white">
+                    {p.hours}h
+                  </span>
+                  <span className="ml-1 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                    de festa
+                  </span>
+                </div>
+
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                  {p.hours === 3 && 'Festas mais íntimas e curtinhas.'}
+                  {p.hours === 4 && 'O equilíbrio perfeito entre tempo e investimento.'}
+                  {p.hours === 5 && 'Para quem quer aproveitar cada minuto da celebração.'}
                 </p>
-                <p className="text-sm text-slate-500 dark:text-slate-400">{p.duration}</p>
+
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/60">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      Seg a Sex
+                    </p>
+                    <p className="mt-1 font-display text-2xl font-black text-emerald-600 dark:text-emerald-400">
+                      {formatBRL(p.weekday)}
+                    </p>
+                    <p className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">
+                      Economize {economyPct}%
+                    </p>
+                  </div>
+                  <div
+                    className={cn(
+                      'rounded-2xl border p-4',
+                      p.highlighted
+                        ? 'border-brand-200 bg-gradient-to-br from-brand-50 to-accent-50 dark:border-brand-700 dark:from-brand-900/30 dark:to-accent-700/20'
+                        : 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/60'
+                    )}
+                  >
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      Sáb e Dom
+                    </p>
+                    <p className="mt-1 font-display text-2xl font-black text-slate-900 dark:text-white">
+                      {formatBRL(p.weekend)}
+                    </p>
+                    <p className="mt-1 text-[10px] font-semibold text-slate-500 dark:text-slate-400">
+                      Maior procura
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex flex-col gap-2">
+                  <Link
+                    to="/reservas"
+                    className={cn(
+                      'inline-flex min-h-11 items-center justify-center rounded-full font-semibold transition',
+                      p.highlighted
+                        ? 'bg-gradient-fun text-white hover:opacity-90'
+                        : 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900'
+                    )}
+                  >
+                    Reservar {p.hours}h
+                  </Link>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-center text-sm font-semibold text-slate-600 hover:text-brand-600 dark:text-slate-400"
+                  >
+                    Tirar dúvida no WhatsApp
+                  </a>
+                </div>
               </div>
-              <ul className="mt-6 space-y-3 text-sm">
-                {p.items.map((it) => (
-                  <li key={it} className="flex items-start gap-2 text-slate-700 dark:text-slate-200">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
-                      <Check className="h-3 w-3" />
-                    </span>
-                    {it}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-7 flex flex-col gap-2">
-                <Link
-                  to="/reservas"
-                  className={`inline-flex min-h-11 items-center justify-center rounded-full font-semibold transition ${
-                    p.highlighted
-                      ? 'bg-gradient-to-r from-pink-500 to-orange-400 text-white hover:opacity-90'
-                      : 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900'
-                  }`}
-                >
-                  Reservar este pacote
-                </Link>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-center text-sm font-semibold text-slate-600 hover:text-sky-600 dark:text-slate-400"
-                >
-                  Tirar dúvida no WhatsApp
-                </a>
-              </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
+
+      <p className="text-center text-xs text-slate-500 dark:text-slate-400">
+        Valores válidos para a Grande São Paulo. Para outras regiões, consulte taxa de
+        deslocamento pelo WhatsApp.
+      </p>
     </section>
   );
 }

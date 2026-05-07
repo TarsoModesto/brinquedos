@@ -20,8 +20,8 @@ const weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
 function visualClasses(v: DayVisual, selected: boolean) {
   const base =
-    'relative flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400';
-  if (selected) return cn(base, 'ring-2 ring-sky-500 ring-offset-2 dark:ring-offset-slate-950');
+    'relative flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400';
+  if (selected) return cn(base, 'ring-2 ring-brand-500 ring-offset-2 dark:ring-offset-slate-950');
   if (v === 'confirmed') return cn(base, 'bg-red-100 text-red-800 dark:bg-red-950/50 dark:text-red-200');
   if (v === 'pending')
     return cn(base, 'bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-100');
@@ -91,16 +91,20 @@ export function BookingCalendar({ bookings, selectedDate, onSelectDate }: Bookin
           const iso = format(day, 'yyyy-MM-dd');
           const v = getDayVisual(iso, bookings);
           const sel = selectedDate === iso;
+          const status =
+            v === 'confirmed' ? 'reservado' : v === 'pending' ? 'pendente' : 'disponível';
           return (
             <button
               key={iso}
               type="button"
               onClick={() => onSelectDate(iso)}
               className={visualClasses(v, sel)}
+              aria-label={`${format(day, "d 'de' MMMM", { locale: ptBR })} — ${status}`}
+              aria-pressed={sel}
             >
               {format(day, 'd')}
               {isToday(parseISO(iso)) ? (
-                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-sky-500" />
+                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-brand-500" aria-label="hoje" />
               ) : null}
             </button>
           );

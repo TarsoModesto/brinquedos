@@ -63,8 +63,8 @@ export function MyBookingsPage() {
         </Card>
       ) : mine.length === 0 ? (
         <Card className="text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sky-100 dark:bg-sky-900/40">
-            <CalendarDays className="h-8 w-8 text-sky-600 dark:text-sky-300" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-100 dark:bg-brand-900/40">
+            <CalendarDays className="h-8 w-8 text-brand-600 dark:text-brand-300" />
           </div>
           <h2 className="mt-4 text-xl font-semibold text-slate-900 dark:text-white">
             Nenhuma reserva ainda

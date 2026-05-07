@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { ConfettiBurst } from '@/components/decor/ConfettiBurst';
 import { Card } from '@/components/ui/Card';
 import { useAuth } from '@/hooks/useAuth';
 import { useBookingStore } from '@/store/bookingStore';
@@ -17,6 +18,7 @@ export function BookingPage() {
   const bookings = useBookingStore((s) => s.bookings);
   const [selected, setSelected] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [celebrate, setCelebrate] = useState(false);
   const preferredDate = (location.state as { preferredDate?: string } | null)?.preferredDate;
 
   useEffect(() => {
@@ -33,6 +35,8 @@ export function BookingPage() {
 
   return (
     <div className="space-y-10">
+      <ConfettiBurst trigger={celebrate} />
+
       <header className="text-center">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">
           Calendário de reservas 🗓️
@@ -63,7 +67,7 @@ export function BookingPage() {
         <div className="space-y-6 lg:col-span-2">
           <UpcomingReservations />
 
-          <div className="rounded-3xl bg-gradient-to-br from-pink-400 via-orange-400 to-amber-400 p-[1px] shadow-soft">
+          <div className="rounded-3xl bg-gradient-fun p-[1px] shadow-soft">
             <div className="rounded-[calc(1.5rem-1px)] bg-white/95 p-8 dark:bg-slate-950/90">
               <p className="text-lg font-semibold text-slate-900 dark:text-white">
                 Quer reservar uma data?
@@ -77,7 +81,7 @@ export function BookingPage() {
                 <Link
                   to="/entrar"
                   state={{ from: '/reservas' }}
-                  className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-sky-400 px-8 font-semibold text-white shadow transition hover:bg-sky-500"
+                  className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-brand-500 px-8 font-semibold text-white shadow transition hover:bg-brand-600"
                 >
                   Entrar ou criar conta
                 </Link>
@@ -93,6 +97,9 @@ export function BookingPage() {
         onClose={() => {
           setModalOpen(false);
           setSelected(null);
+        }}
+        onCreated={() => {
+          setCelebrate((v) => !v);
         }}
       />
     </div>

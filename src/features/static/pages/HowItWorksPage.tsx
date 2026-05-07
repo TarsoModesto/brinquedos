@@ -4,17 +4,17 @@ import { Card } from '@/components/ui/Card';
 const steps = [
   {
     title: '1. Escolha a data',
-    body: 'Abra o calendário de reservas e veja quando o carretar está disponível na sua região.',
+    body: 'Abra o calendário de reservas e veja quando a Carretinha Mini Parke está disponível na sua região.',
     icon: CalendarCheck,
   },
   {
     title: '2. Solicite a reserva',
-    body: 'Faça login, informe seus dados e envie o pedido. Você receberá retorno em breve.',
+    body: 'Faça login, informe seus dados e envie o pedido. Você receberá retorno em poucas horas.',
     icon: PartyPopper,
   },
   {
-    title: '3. Alegria na sua festa',
-    body: 'No dia combinado, levamos o brinquedo até você com toda a segurança e diversão.',
+    title: '3. Festa garantida',
+    body: 'No dia combinado, a equipe leva o mini parque até você com toda a segurança e diversão.',
     icon: Truck,
   },
 ] as const;
@@ -29,7 +29,7 @@ export function HowItWorksPage() {
       <div className="space-y-4">
         {steps.map(({ title, body, icon: Icon }) => (
           <Card key={title} className="flex gap-4 p-6">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-200">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-100 text-brand-700 dark:bg-brand-900/50 dark:text-brand-200">
               <Icon className="h-6 w-6" />
             </div>
             <div>

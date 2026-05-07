@@ -1,6 +1,12 @@
 import { supabase } from '@/services/supabase/client';
 import type { LoginInput, RegisterInput, User } from '@/types';
 
+export interface RegisterResult {
+  user: User | null;
+  /** Quando true, o Supabase exige confirmação de e-mail antes do login. */
+  needsEmailConfirmation: boolean;
+}
+
 async function buildUser(authUser: { id: string; email?: string | null }): Promise<User> {
   const [{ data: profile }, { data: adminRow }] = await Promise.all([
     supabase
@@ -21,7 +27,7 @@ async function buildUser(authUser: { id: string; email?: string | null }): Promi
 }
 
 export const authService = {
-  async register(input: RegisterInput): Promise<User> {
+  async register(input: RegisterInput): Promise<RegisterResult> {
     const { data, error } = await supabase.auth.signUp({
       email: input.email.trim().toLowerCase(),
       password: input.password,
@@ -29,7 +35,11 @@ export const authService = {
     });
     if (error) throw new Error(translateAuthError(error.message));
     if (!data.user) throw new Error('Não foi possível criar a conta.');
-    return buildUser(data.user);
+
+    // Quando o projeto exige confirmação de e-mail, `session` vem null no signUp.
+    const needsEmailConfirmation = !data.session;
+    const user = needsEmailConfirmation ? null : await buildUser(data.user);
+    return { user, needsEmailConfirmation };
   },
 
   async login(input: LoginInput): Promise<User> {

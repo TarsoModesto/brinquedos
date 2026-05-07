@@ -113,14 +113,14 @@ function SidebarContent({ onNavigate }: { onNavigate: () => void }) {
         onClick={onNavigate}
         className="mb-8 flex items-center gap-3 font-bold text-slate-900 dark:text-white"
       >
-        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500 text-white shadow-soft">
+        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-fun text-white shadow-soft">
           <Truck className="h-6 w-6" aria-hidden />
         </span>
         <div className="leading-tight">
           <p className="text-sm uppercase tracking-wide text-slate-500 dark:text-slate-400">
             Admin
           </p>
-          <p>Carretar</p>
+          <p>Mini Parke</p>
         </div>
       </Link>
 
@@ -135,7 +135,7 @@ function SidebarContent({ onNavigate }: { onNavigate: () => void }) {
               cn(
                 'flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition',
                 isActive
-                  ? 'bg-gradient-to-r from-amber-100 to-pink-100 text-slate-900 shadow-sm dark:from-amber-900/40 dark:to-pink-900/40 dark:text-white'
+                  ? 'bg-gradient-to-r from-accent-100 to-brand-100 text-slate-900 shadow-sm dark:from-accent-700/40 dark:to-brand-900/40 dark:text-white'
                   : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
               )
             }

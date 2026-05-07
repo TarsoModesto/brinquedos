@@ -93,16 +93,16 @@ export function AdminDashboardPage() {
             Dashboard
           </h1>
           <p className="mt-1 text-slate-600 dark:text-slate-400">
-            Visão geral do Carretar da Alegria.
+            Visão geral do Carretinha Mini Parke.
           </p>
         </div>
-        <div className="rounded-full bg-gradient-to-r from-amber-100 to-pink-100 px-4 py-2 text-sm font-medium text-slate-700 dark:from-amber-900/40 dark:to-pink-900/40 dark:text-slate-200">
+        <div className="rounded-full bg-gradient-to-r from-accent-100 to-brand-100 px-4 py-2 text-sm font-medium text-slate-700 dark:from-accent-700/40 dark:to-brand-900/40 dark:text-slate-200">
           <Sparkles className="mr-1 inline h-4 w-4" /> Painel administrativo
         </div>
       </header>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Reservas no mês" value={stats.thisMonth} icon={CalendarDays} accent="sky" />
+        <StatCard label="Reservas no mês" value={stats.thisMonth} icon={CalendarDays} accent="brand" />
         <StatCard
           label="Confirmadas"
           value={stats.confirmed}
@@ -123,7 +123,7 @@ export function AdminDashboardPage() {
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
-            <TrendingUp className="h-5 w-5 text-sky-500" />
+            <TrendingUp className="h-5 w-5 text-support-500" />
             Reservas por mês
           </div>
           {monthBars.length === 0 ? (
@@ -133,7 +133,7 @@ export function AdminDashboardPage() {
               {monthBars.map((m) => (
                 <div key={m.key} className="flex flex-1 flex-col items-center gap-2">
                   <div
-                    className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-t from-sky-200 to-sky-500 dark:from-sky-900/40 dark:to-sky-400"
+                    className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-t from-brand-200 to-brand-500 dark:from-brand-900/40 dark:to-brand-400"
                     style={{ height: `${Math.max(12, m.pct * 1.6)}px` }}
                     title={`${m.n} reserva(s)`}
                   >
@@ -155,7 +155,7 @@ export function AdminDashboardPage() {
             <p className="font-semibold text-slate-900 dark:text-white">Próximas datas</p>
             <Link
               to="/admin/reservas"
-              className="text-xs font-semibold text-sky-600 hover:underline dark:text-sky-300"
+              className="text-xs font-semibold text-brand-600 hover:underline dark:text-brand-300"
             >
               Ver todas
             </Link>

@@ -6,16 +6,32 @@ const faq = [
     a: 'Atendemos toda a Grande São Paulo. Para regiões mais distantes, consulte disponibilidade e taxa de deslocamento pelo WhatsApp.',
   },
   {
-    q: 'Como funciona a reserva da data?',
-    a: 'Basta criar uma conta, escolher a data no calendário e confirmar. Em até algumas horas retornamos com a confirmação ou ajuste necessário.',
+    q: 'Quais brinquedos vêm na Carretinha?',
+    a: 'Em todas as festas a Carretinha leva piscina de bolinhas, pula-pula, tobogã e obstáculos. Tudo na mesma unidade, sem custos adicionais.',
   },
   {
-    q: 'O brinquedo precisa de espaço grande?',
-    a: 'A carretinha cabe em quintais médios e áreas comuns de salões. Se tiver dúvida, mande uma foto pelo WhatsApp que avaliamos junto.',
+    q: 'Para qual idade a Carretinha é indicada?',
+    a: 'A estrutura é pensada para crianças de 0 a 7 anos, com supervisão do nosso monitor durante toda a festa.',
+  },
+  {
+    q: 'O monitor já está incluso?',
+    a: 'Sim! Todas as reservas incluem um monitor profissional acompanhando os pequenos do início ao fim — sem cobrança extra.',
+  },
+  {
+    q: 'Como funciona a reserva da data?',
+    a: 'Crie uma conta, escolha a data no calendário e confirme. Em até algumas horas retornamos com a confirmação ou ajuste necessário.',
+  },
+  {
+    q: 'Qual o espaço necessário para a Carretinha?',
+    a: 'Cabe em quintais médios e áreas comuns de salões. Se tiver dúvida, mande uma foto pelo WhatsApp que avaliamos junto com você antes de confirmar.',
+  },
+  {
+    q: 'E se chover no dia da festa?',
+    a: 'Conversamos com você previamente para encontrar a melhor solução: remarcação sem custo adicional ou adaptação do espaço, conforme o caso.',
   },
   {
     q: 'Posso cancelar ou remarcar?',
-    a: 'Sim! Você pode cancelar reservas pendentes direto na sua conta. Para remarcação, fale com a gente que ajustamos sem dor de cabeça.',
+    a: 'Sim! Reservas pendentes podem ser canceladas direto na sua conta. Para remarcação, fale com a gente que ajustamos sem dor de cabeça.',
   },
   {
     q: 'Quais formas de pagamento vocês aceitam?',

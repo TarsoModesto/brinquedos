@@ -118,7 +118,7 @@ export function AdminUsersPage() {
                           className={cn(
                             'flex h-9 w-9 items-center justify-center rounded-full',
                             isAdmin
-                              ? 'bg-gradient-to-br from-amber-400 to-pink-500 text-white'
+                              ? 'bg-gradient-fun text-white'
                               : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
                           )}
                         >
@@ -127,7 +127,7 @@ export function AdminUsersPage() {
                         <span className="font-semibold text-slate-900 dark:text-white">
                           {u.name}
                           {isSelf ? (
-                            <span className="ml-2 rounded-full bg-sky-100 px-2 py-0.5 text-xs font-medium text-sky-700 dark:bg-sky-900/40 dark:text-sky-200">
+                            <span className="ml-2 rounded-full bg-support-400/20 px-2 py-0.5 text-xs font-medium text-support-600 dark:text-support-400">
                               você
                             </span>
                           ) : null}

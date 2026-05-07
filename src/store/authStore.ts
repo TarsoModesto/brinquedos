@@ -8,7 +8,8 @@ interface AuthState {
   init: () => Promise<void>;
   refresh: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  /** Retorna true se a confirmação de e-mail é exigida (login não acontece automaticamente). */
+  register: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
 }
 
@@ -40,8 +41,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   register: async (name, email, password) => {
-    const user = await authService.register({ name, email, password });
-    set({ user });
+    const result = await authService.register({ name, email, password });
+    if (result.user) set({ user: result.user });
+    return result.needsEmailConfirmation;
   },
 
   logout: async () => {

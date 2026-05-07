@@ -1,4 +1,4 @@
-# Setup Supabase — Carretar da Alegria
+# Setup Supabase — Carretinha Mini Parke
 
 ## 1) Aplicar o schema
 

@@ -1,29 +1,30 @@
 import { Heart, Shield, Smile, Sparkles } from 'lucide-react';
+import { RevealStagger } from '@/components/ui/RevealStagger';
 
 const benefits = [
   {
     title: 'Crianças felizes',
     description: 'Diversão garantida do início ao fim da festa, com atenção especial aos pequenos.',
     icon: Smile,
-    accent: 'from-pink-400 to-rose-500',
+    accent: 'from-brand-400 to-brand-600',
   },
   {
     title: '100% seguro',
-    description: 'Brinquedo revisado a cada uso e operação supervisionada pela nossa equipe.',
+    description: 'Brinquedo revisado a cada uso e operação acompanhada pela nossa equipe.',
     icon: Shield,
-    accent: 'from-sky-400 to-sky-600',
+    accent: 'from-support-400 to-support-600',
   },
   {
-    title: '+200 festas realizadas',
-    description: 'Avaliação 5 estrelas e clientes que voltam a contratar a cada nova celebração.',
-    icon: Sparkles,
-    accent: 'from-amber-400 to-orange-500',
-  },
-  {
-    title: 'Atendimento humanizado',
-    description: 'Falamos no seu tempo, ajustamos detalhes e tratamos cada festa como única.',
+    title: 'Equipe atenciosa',
+    description: 'Atendimento humanizado, falamos no seu tempo e ajustamos cada detalhe.',
     icon: Heart,
-    accent: 'from-emerald-400 to-emerald-600',
+    accent: 'from-magic-400 to-magic-600',
+  },
+  {
+    title: 'Estrutura completa',
+    description: 'Tudo num só lugar: piscina, pula-pula, tobogã, obstáculos e monitor incluso.',
+    icon: Sparkles,
+    accent: 'from-accent-400 to-orange-500',
   },
 ] as const;
 
@@ -31,7 +32,7 @@ export function BenefitsSection() {
   return (
     <section className="space-y-8" id="beneficios">
       <header className="text-center">
-        <span className="inline-block rounded-full bg-rose-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-rose-700 dark:bg-rose-900/40 dark:text-rose-200">
+        <span className="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-700 dark:bg-brand-900/40 dark:text-brand-200">
           Por que escolher
         </span>
         <h2 className="mt-3 font-display text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">
@@ -39,7 +40,7 @@ export function BenefitsSection() {
         </h2>
       </header>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <RevealStagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4" step={120} variant="up">
         {benefits.map(({ title, description, icon: Icon, accent }) => (
           <article
             key={title}
@@ -54,7 +55,7 @@ export function BenefitsSection() {
             </p>
           </article>
         ))}
-      </div>
+      </RevealStagger>
     </section>
   );
 }

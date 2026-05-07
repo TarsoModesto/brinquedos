@@ -1,49 +1,32 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Camera } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { GALLERY_IMAGES } from '@/constants/media';
+import { ImageCarousel } from '@/components/ui/ImageCarousel';
 
 export function GalleryPreviewSection() {
+  // Mostra até 6 fotos no preview; '/galeria' tem todas.
+  const images = GALLERY_IMAGES.slice(0, 6);
+
   return (
-    <section className="space-y-8">
+    <section className="space-y-6 sm:space-y-7">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="inline-block rounded-full bg-pink-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-pink-700 dark:bg-pink-900/40 dark:text-pink-200">
+          <span className="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-brand-700 dark:bg-brand-900/40 dark:text-brand-200">
             Galeria
           </span>
-          <h2 className="mt-3 font-display text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">
-            Momentos que criamos juntos
+          <h2 className="mt-3 font-display text-[clamp(1.8rem,4vw,2.6rem)] font-black text-slate-900 dark:text-white">
+            Veja a Carretinha de perto
           </h2>
         </div>
         <Link
           to="/galeria"
-          className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/95 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 dark:border-slate-700 dark:bg-slate-900/90 dark:text-slate-200 dark:hover:bg-slate-900"
         >
-          Ver tudo <ArrowRight className="h-4 w-4" />
+          Ver tudo ({GALLERY_IMAGES.length}) <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
       </header>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 md:grid-rows-2">
-        {GALLERY_IMAGES.map((img, i) => (
-          <figure
-            key={img.src}
-            className={`group relative overflow-hidden rounded-3xl shadow-soft ring-1 ring-slate-100 dark:ring-slate-800 ${
-              i === 0 ? 'col-span-2 row-span-2' : ''
-            }`}
-          >
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent opacity-0 transition group-hover:opacity-100" />
-            <span className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-slate-900 opacity-0 transition group-hover:opacity-100">
-              <Camera className="h-3 w-3" />
-              Festa #{i + 1}
-            </span>
-          </figure>
-        ))}
-      </div>
+      <ImageCarousel images={images} className="mx-auto max-w-[min(100%,1120px)]" />
     </section>
   );
 }

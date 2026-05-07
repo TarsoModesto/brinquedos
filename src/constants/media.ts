@@ -1,30 +1,40 @@
-/** URLs públicas para demonstração — substitua por fotos reais em `public/images`. */
-export const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=80';
+/**
+ * Imagens reais da Carretinha Mini Parke, servidas a partir de `public/images/`.
+ */
+
+export const HERO_IMAGE = '/images/hero/principal.jpeg';
 
 export const GALLERY_IMAGES = [
   {
-    src: 'https://picsum.photos/seed/carretar1/900/700',
-    alt: 'Carreta de brinquedo colorida estacionada para festa ao ar livre',
+    src: '/images/gallery/Capa.jpeg',
+    alt: 'Carretinha Mini Parke completa em dia ensolarado, vista frontal com tobogã verde',
   },
   {
-    src: 'https://picsum.photos/seed/carretar2/800/900',
-    alt: 'Criança sorrindo enquanto brinca no carretar',
+    src: '/images/gallery/crianca-brincando.jpeg',
+    alt: 'Criança se divertindo dentro da Carretinha Mini Parke',
   },
   {
-    src: 'https://picsum.photos/seed/carretar3/1000/700',
-    alt: 'Famílias reunidas em torno do brinquedo móvel',
+    src: '/images/gallery/carretinha-noite.jpeg',
+    alt: 'Carretinha Mini Parke iluminada à noite com banner colorido em festa',
   },
   {
-    src: 'https://picsum.photos/seed/carretar4/900/700',
-    alt: 'Festa infantil colorida com decoração temática',
+    src: '/images/gallery/festa-na-rua.jpeg',
+    alt: 'Carretinha Mini Parke em uso em festa na rua, ângulo lateral',
   },
   {
-    src: 'https://picsum.photos/seed/carretar5/900/700',
-    alt: 'Operador da equipe Carretar acompanhando crianças',
+    src: '/images/gallery/frontal-estrutura.jpeg',
+    alt: 'Vista frontal da estrutura colorida com escorregador interno',
   },
   {
-    src: 'https://picsum.photos/seed/carretar6/900/700',
-    alt: 'Crianças aplaudindo durante uma festa de aniversário',
+    src: '/images/gallery/lateral-gramado.jpeg',
+    alt: 'Carretinha Mini Parke vista de lado com gramado e céu azul',
+  },
+  {
+    src: '/images/gallery/interior-detalhe.jpeg',
+    alt: 'Detalhe do interior colorido com tubos de espuma e redes',
+  },
+  {
+    src: '/images/gallery/carretinha-dia.jpeg',
+    alt: 'Carretinha Mini Parke vista de dia mostrando piscina de bolinhas, pula-pula e tobogã',
   },
 ] as const;

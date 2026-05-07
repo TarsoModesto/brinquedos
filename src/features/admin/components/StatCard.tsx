@@ -5,19 +5,19 @@ interface StatCardProps {
   label: string;
   value: string | number;
   icon: LucideIcon;
-  accent?: 'sky' | 'emerald' | 'amber' | 'rose' | 'violet';
+  accent?: 'brand' | 'emerald' | 'amber' | 'support' | 'violet';
   hint?: string;
 }
 
 const accents = {
-  sky: 'from-sky-400 to-sky-600 text-white',
+  brand: 'from-brand-400 to-brand-600 text-white',
   emerald: 'from-emerald-400 to-emerald-600 text-white',
-  amber: 'from-amber-400 to-orange-500 text-white',
-  rose: 'from-rose-400 to-pink-600 text-white',
-  violet: 'from-violet-500 to-fuchsia-500 text-white',
+  amber: 'from-accent-400 to-orange-500 text-white',
+  support: 'from-support-400 to-support-600 text-white',
+  violet: 'from-magic-400 to-magic-600 text-white',
 } as const;
 
-export function StatCard({ label, value, icon: Icon, accent = 'sky', hint }: StatCardProps) {
+export function StatCard({ label, value, icon: Icon, accent = 'brand', hint }: StatCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-start justify-between gap-4">
